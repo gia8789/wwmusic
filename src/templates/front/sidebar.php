@@ -1,6 +1,11 @@
           <h1 class="my-4">Cerca</h1>
           <div class="list-group">
-            <a href="#" class="list-group-item">Categoria 1</a>
-            <a href="#" class="list-group-item">Categoria 2</a>
-            <a href="#" class="list-group-item">Categoria 3</a>
+
+            <?php 
+            $sql = 'SELECT * FROM `category`'; 
+            $nameCateg = $pdo -> query($sql);
+            while($row = $nameCateg -> fetch()) 
+                echo '<a href="#" class="list-group-item">' . $row['name_categ'] . '</a>';
+            ?>
+            
           </div>

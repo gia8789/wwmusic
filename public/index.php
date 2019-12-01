@@ -28,4 +28,4 @@ include FRONTEND . "header.php";
     <!-- /.container -->
 
     <!-- Footer -->
-    <?php include FRONT . "footer.php"; ?>
+    <?php include FRONTEND . "footer.php"; ?>
