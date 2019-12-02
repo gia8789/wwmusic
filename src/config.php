@@ -15,3 +15,5 @@ catch(Exception $e) {
     echo 'Errore nella connessione al database';
     $pdo = false;
 }
+
+

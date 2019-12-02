@@ -3,7 +3,7 @@
 
             <?php 
             require_once __DIR__ . '/../../functions.php';
-            listSingleValue('category','name_categ'); 
+            listCategories(); 
             ?>
 
           </div>          
