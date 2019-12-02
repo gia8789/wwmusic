@@ -1,5 +1,5 @@
 <?php 
-require_once "../src/templates/config.php";
+require_once "../src/config.php";
 include FRONTEND . "header.php";
 ?>
     <!-- Page Content -->

@@ -2,10 +2,8 @@
           <div class="list-group">
 
             <?php 
-            $sql = 'SELECT * FROM `category`'; 
-            $nameCateg = $pdo -> query($sql);
-            while($row = $nameCateg -> fetch()) 
-                echo '<a href="#" class="list-group-item">' . $row['name_categ'] . '</a>';
+            require_once __DIR__ . '/../../functions.php';
+            listSingleValue('category','name_categ'); 
             ?>
-            
-          </div>
+
+          </div>          
