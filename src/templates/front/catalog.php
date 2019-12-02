@@ -1,4 +1,7 @@
-
+<?php
+require_once __DIR__ . '/../../functions.php';
+listProductCard();
+?>
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
                 <a href="#"><img class="card-img-top" src="https://lorempixel.com/700/400" alt=""></a>
@@ -93,4 +96,4 @@
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                 </div>
               </div>
-            </div>
+            </div> 

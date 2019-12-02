@@ -1,3 +1,9 @@
+<?php 
+require_once "../src/config.php";
+include FRONTEND . "header.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -149,3 +155,5 @@
   </body>
 
 </html>
+
+<?php include FRONTEND . "footer.php"; ?>
