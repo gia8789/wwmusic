@@ -6,9 +6,16 @@ function listCategories() {
         $sql = 'SELECT * FROM `category`'; 
         $nameCateg = $pdo -> query($sql);
         while($row = $nameCateg -> fetch()) {
+            // only if you select a category or a brand
+            $activeButton = (isset($_GET['id']) && 
+                              isset($_GET['filter']) && 
+                              ($_GET['filter'] == 1) &&
+                              ($row['id_categ'] == $_GET['id'])
+                            ) ? 'background-color:#eeeeee' : '';
             $categoryLabel = <<<CATEGORY
-
-            <a href="index.php?filter=1&id={$row['id_categ']}" class="list-group-item text-dark"><b>{$row['name_categ']}</b></a>
+            
+            <a href="index.php?filter=1&id={$row['id_categ']}" class="list-group-item text-dark" 
+            style={$activeButton}><b>{$row['name_categ']}</b></a>
             CATEGORY;
 
             echo $categoryLabel;
@@ -22,9 +29,16 @@ function listBrands() {
       $sql = 'SELECT * FROM `brand`'; 
       $nameCateg = $pdo -> query($sql);
       while($row = $nameCateg -> fetch()) {
+          $activeButton = (isset($_GET['id']) && 
+                            isset($_GET['filter']) && 
+                            ($_GET['filter'] == 2) &&
+                            ($row['id_brand'] == $_GET['id'])
+                          ) ? 'background-color:#eeeeee' : '';
           $categoryLabel = <<<CATEGORY
 
-          <a href="index.php?filter=2&id={$row['id_brand']}" class="list-group-item text-dark"><b>{$row['name_brand']}</b></a>
+          <a href="index.php?filter=2&id={$row['id_brand']}" class="list-group-item text-dark" 
+          style={$activeButton}>
+          <b>{$row['name_brand']}</b></a>
           CATEGORY;
 
           echo $categoryLabel;
@@ -36,22 +50,20 @@ function listBrands() {
 function HomeList() {
     global $pdo;
     if($pdo) {
-      $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand LIMIT 6';//$sql = 'SELECT * FROM `product`';
+      $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand LIMIT 6';
         $infoProduct = $pdo -> query($sql);
         while($row = $infoProduct -> fetch()) {
             $productCard = <<<PRODUCT
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="product.php?id={$row['id_product']}"><img class="card-img-top" src="../src/images/{$row['image_product']}" alt=""></a>
+                <a href="product.php?filter=0&id={$row['id_product']}"><img class="card-img-top" 
+                src="../src/images/{$row['image_product']}" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    {$row['name_brand']}
+                    {$row['name_brand']} <i>{$row['name_product']}</i>
                   </h4>
-                  <h4 class="card-title">
-                    <a href="product.php?id={$row['id_product']}">{$row['name_product']}</a>
-                  </h4>
-                  <h5>{$row['price_product']} €</h5>
+                  <h5><b>{$row['price_product']} €</b></h5>
                   <p class="card-text">{$row['description_product']}</p>
                 </div>
                 <div class="card-footer">
@@ -100,14 +112,16 @@ function singleProduct() {
 function showByCategory() {
   global $pdo;
   if($pdo) {
-    $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand WHERE `categ_product`=' . $_GET['id'];
+    $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand 
+    WHERE `categ_product`=' . $_GET['id'];
       $infoProduct = $pdo -> query($sql);
       while($row = $infoProduct -> fetch()) {
           $productCard = <<<PRODUCT
 
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="product.php?id={$row['id_product']}"><img class="card-img-top" src="../src/images/{$row['image_product']}" alt=""></a>
+              <a href="product.php?id={$row['id_product']}"><img class="card-img-top" 
+              src="../src/images/{$row['image_product']}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   {$row['name_brand']}
@@ -131,11 +145,12 @@ function showByCategory() {
 }
 
 //All products shown by category or by brand
-function listFiltered($filter = 0, $filterValue) {
+function listFiltered($filter, $filterValue) {
   global $pdo;
   if($pdo) {
+      //categories will send filter 1, brands will send filter 2
       switch($filter) {
-
+      
       case 1:
       $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand
       WHERE `categ_product`=' . $filterValue;
@@ -156,15 +171,13 @@ function listFiltered($filter = 0, $filterValue) {
 
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="product.php?id={$row['id_product']}"><img class="card-img-top" src="../src/images/{$row['image_product']}" alt=""></a>
+              <a href="product.php?id={$row['id_product']}"><img class="card-img-top" 
+              src="../src/images/{$row['image_product']}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  {$row['name_brand']}
+                  {$row['name_brand']} <i>{$row['name_product']}</i>
                 </h4>
-                <h4 class="card-title">
-                  <a href="product.php?id={$row['id_product']}">{$row['name_product']}</a>
-                </h4>
-                <h5>{$row['price_product']} €</h5>
+                <h5><b>{$row['price_product']} €</b></h5>
                 <p class="card-text">{$row['description_product']}</p>
               </div>
               <div class="card-footer">

@@ -9,7 +9,9 @@ include FRONTEND . "header.php";
         
         <div class="col-lg-3">
           <!-- Sidebar -->
+          
           <?php include FRONTEND . "sidebar.php"; ?>
+         
         </div>
         
         <div class="col-lg-9">

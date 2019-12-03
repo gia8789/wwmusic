@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 02, 2019 alle 21:58
+-- Creato il: Dic 03, 2019 alle 22:57
 -- Versione del server: 10.4.8-MariaDB
 -- Versione PHP: 7.3.11
 
@@ -87,13 +87,15 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id_product`, `name_product`, `categ_product`, `brand_product`, `description_product`, `price_product`, `image_product`) VALUES
-(1, 'Export Fusion', 4, 4, NULL, 699, NULL),
-(2, 'Les Paul Standard', 1, 3, NULL, 2599, 'lespaul.jpg'),
-(3, 'Precision American Standard', 2, 1, NULL, 1699, 'precision.jpg'),
-(4, 'PSR SX700', 3, 6, NULL, 1129, NULL),
-(5, 'AM ULTRA Stratocaster MN Texas Tea', 1, 1, NULL, 1979, NULL),
-(6, 'American Professional Telecaster MN Black', 1, 1, NULL, 1589, NULL),
-(7, 'BTB1826 NTL Natural', 2, 2, NULL, 1539, NULL);
+(1, 'Export Fusion', 4, 4, NULL, 699, 'export_fusion.png'),
+(2, 'Les Paul Standard', 1, 3, NULL, 2599, 'lespaul.png'),
+(3, 'Precision American Standard', 2, 1, NULL, 1699, 'precision.png'),
+(4, 'PSR SX700', 3, 6, NULL, 1129, 'psrsx700.png'),
+(5, 'AM ULTRA Stratocaster MN Texas Tea', 1, 1, NULL, 1979, 'stratocaster.png'),
+(6, 'American Professional Telecaster MN Black', 1, 1, NULL, 1589, 'telecaster.png'),
+(7, 'BTB1826 NTL Natural', 2, 2, NULL, 1539, 'btb1826.png'),
+(8, 'RM52KH6C CCM', 4, 5, NULL, 589, 'rm52kh6c.png'),
+(9, 'PSR SX900', 3, 6, NULL, 1959, 'psrsx900.png');
 
 --
 -- Indici per le tabelle scaricate
@@ -139,7 +141,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT per la tabella `product`
 --
 ALTER TABLE `product`
-  MODIFY `id_product` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_product` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Limiti per le tabelle scaricate
