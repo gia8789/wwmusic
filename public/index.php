@@ -14,7 +14,11 @@ include FRONTEND . "header.php";
         
         <div class="col-lg-9">
           <!-- carousel -->
-          <?php include FRONTEND . "carousel.php"; ?>
+          <?php
+          if(!isset($_GET['id']))
+            include FRONTEND . "carousel.php"; 
+          ?>
+
           <div class="row">
             <!-- catalog -->
             <?php include FRONTEND . "catalog.php" ?>

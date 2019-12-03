@@ -1,4 +1,9 @@
 <?php
 require_once __DIR__ . '/../../functions.php';
-listProductCard();
+
+if(!isset($_GET['id']))
+    HomeList();
+else
+    ListFiltered($_GET['filter'],$_GET['id']);
+
 ?>

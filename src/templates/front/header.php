@@ -23,7 +23,7 @@
   
   </head>
 
-  <body>
+  <body style="background-color:#eee">
 
     <!-- Navigation -->
     <?php include FRONTEND . "navbar.php";

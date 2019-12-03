@@ -1,7 +1,7 @@
-          <!--<h3 class="my-4">Categorie</h3>-->
-          
+            
           <br>
-          <a href="index.php" class="list-group-item bg-dark text-white"><b>Pagina principale</b></a>
+          <span class="list-group-item bg-dark text-white"><b>Filtra per categoria</b></span>
+          <a href="index.php?filter=0&id=0" class="list-group-item text-dark"><b>Tutte le categorie</b></a>
           <div class="list-group">
 
             <?php 
@@ -9,4 +9,16 @@
             listCategories(); 
             ?>
 
-          </div>          
+          </div> 
+          
+          
+          <span class="list-group-item bg-dark text-white" style="margin-top:50px"><b>Filtra per marca</b></span>
+          <a href="index.php?filter=0&id=0" class="list-group-item text-dark"><b>Tutte le marche</b></a>
+          <div class="list-group">
+
+            <?php 
+            require_once __DIR__ . '/../../functions.php';
+            listBrands(); 
+            ?>
+
+          </div>
