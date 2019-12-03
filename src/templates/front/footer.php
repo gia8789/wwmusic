@@ -1,5 +1,5 @@
 
-    <footer class="py-5 bg-primary">
+    <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Il tuo primo CMS 2017<br>Sviluppato per il corso di PHP</p>
       </div>

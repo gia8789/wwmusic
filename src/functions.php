@@ -8,7 +8,7 @@ function listCategories() {
         while($row = $nameCateg -> fetch()) {
             $categoryLabel = <<<CATEGORY
 
-            <a href="category.php?id={$row['id_categ']}" class="list-group-item">{$row['name_categ']}</a>
+            <a href="category.php?id={$row['id_categ']}" class="list-group-item text-dark"><b>{$row['name_categ']}</b></a>
             CATEGORY;
 
             echo $categoryLabel;
@@ -19,7 +19,7 @@ function listCategories() {
 function listProductCard() {
     global $pdo;
     if($pdo) {
-      $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand';//$sql = 'SELECT * FROM `product`';
+      $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand LIMIT 6';//$sql = 'SELECT * FROM `product`';
         $infoProduct = $pdo -> query($sql);
         while($row = $infoProduct -> fetch()) {
             $productCard = <<<PRODUCT
@@ -52,7 +52,9 @@ function listProductCard() {
 function singleProduct() {
   global $pdo;
     if($pdo) {
-        $sql = 'SELECT * FROM `product` WHERE `id_product` = ' . $_GET['id'];
+        $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand 
+        WHERE `id_product`=' . $_GET['id'];
+
         $infoProduct = $pdo -> query($sql);
         while($row = $infoProduct -> fetch()) {
             $productCard = <<<PRODUCT
@@ -60,7 +62,7 @@ function singleProduct() {
             <div class="card mt-4">
               <img class="card-img-top img-fluid" src="../src/images/{$row['image_product']}" alt="">
               <div class="card-body">
-                <h3 class="card-title">{$row['name_product']}</h3>
+                <h3 class="card-title"><b>{$row['name_brand']} <i>{$row['name_product']}</i></b></h3>
                 <h4>{$row['price_product']} €</h4>
                 <p class="card-text">{$row['description_product']}</p>
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>

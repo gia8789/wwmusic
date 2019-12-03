@@ -1,4 +1,7 @@
-          <h1 class="my-4">Cerca</h1>
+          <!--<h3 class="my-4">Categorie</h3>-->
+          
+          <br>
+          <a href="index.php" class="list-group-item bg-dark text-white"><b>Pagina principale</b></a>
           <div class="list-group">
 
             <?php 
