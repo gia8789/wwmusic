@@ -15,17 +15,18 @@
               <a class="nav-link" href="index.php?filter=0&id=0">CATALOGO</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">LOGIN</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">CHECKOUT</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">ADMIN</a>
-            </li>
-            <li class="nav-item active">
               <a class="nav-link" href="#">CONTATTI</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">REGISTRATI</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">ACCEDI</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">CARRELLO</a>
+            </li>
+            
           </ul>
         </div>
       </div>

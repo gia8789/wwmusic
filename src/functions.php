@@ -64,7 +64,7 @@ function HomeList() {
                   <h4 class="card-title">
                     {$row['name_brand']} <i>{$row['name_product']}</i>
                   </h4>
-                  <p class="card-text">{$row['description_product']}</p>
+                  
                 </div>
                 <div class="card-footer bg-white">
                   <div class="row">
@@ -121,7 +121,7 @@ function listFiltered($filter, $filterValue) {
                   <h4 class="card-title">
                     {$row['name_brand']} <i>{$row['name_product']}</i>
                   </h4>
-                  <p class="card-text">{$row['description_product']}</p>
+                  
                 </div>
                 <div class="card-footer bg-white">
                   <div class="row">
@@ -160,11 +160,13 @@ function singleProduct() {
             <div class="card mt-4">
               <div class="card-body">
                 <h3 class="card-title"><b>{$row['name_brand']} <i>{$row['name_product']}</i></b></h3>
-                <h4>{$row['price_product']} €</h4>
+                <p class="card-text">{$row['description_product']}</p>
               </div>
               <img class="card-img-top img-fluid" src="../src/images/{$row['image_product']}" alt="">
+              
               <div class="card-body">
-                <p class="card-text">{$row['description_product']}</p>
+              <h4><b>{$row['price_product']} €</b></h4>
+                
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stelle
               </div>
