@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 defined('FRONTEND') ? null : define('FRONTEND', __DIR__ . '/templates/front/');
 defined('BACKEND') ? null : define('BACKEND', __DIR__ . '/templates/back/');

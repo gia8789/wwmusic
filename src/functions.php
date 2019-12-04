@@ -51,7 +51,7 @@ function listBrands() {
 function HomeList() {
     global $pdo;
     if($pdo) {
-      $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand';// LIMIT 6';
+        $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand ORDER BY RAND() LIMIT 6";
         $infoProduct = $pdo -> query($sql);
         while($row = $infoProduct -> fetch()) {
                  
@@ -72,7 +72,7 @@ function HomeList() {
                     <h5><b>{$row['price_product']} €</b></h5>
                     </div>
                     <div class="col-lg-7">
-                    <a href="carrello.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
+                    <a href="toShoppingCart.php"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
                     </div>
                   </div>
                 </div>
@@ -125,10 +125,10 @@ function listFiltered($filter, $filterValue) {
                 </div>
                 <div class="card-footer bg-white">
                   <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-md-5">
                     <h5><b>{$row['price_product']} €</b></h5>
                     </div>
-                    <div class="col-lg-7">
+                    <div class="col-md-7">
                     <a href="carrello.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
                     </div>
                   </div>
@@ -165,10 +165,21 @@ function singleProduct() {
               <img class="card-img-top img-fluid" src="../src/images/{$row['image_product']}" alt="">
               
               <div class="card-body">
-              <h4><b>{$row['price_product']} €</b></h4>
-                
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                <div class="row">
+                  <div class="col-md-4">
+                    <h4><b>{$row['price_product']} €</b></h4>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stelle
+                  </div>
+                  <div class="col-md-6">
+                    <a href=""><button type="button" class="btn btn-dark btn-small btn-block">Acquista</button></a>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>  
+              
+             
+                
               </div>
             </div> 
             SINGLE_PRODUCT;

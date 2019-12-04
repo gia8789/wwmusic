@@ -21,7 +21,7 @@ include FRONTEND . "header.php";
           <!-- /.card -->
           
           <div class="card card-outline-secondary my-4">
-            <div class="card-header">
+            <div class="card-header bg-dark text-white">
               Recensioni
             </div>
             <div class="card-body">
@@ -34,7 +34,7 @@ include FRONTEND . "header.php";
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
               <small class="text-muted">Pubbicata il 3 ottobre 2017</small>
               <hr>
-              <a href="#" class="btn btn-info">Lascia una recensione</a>
+              <a href="#" class="btn btn-dark btn-info">Lascia una recensione</a>
             </div>
           </div>  
           <!-- /.card -->
