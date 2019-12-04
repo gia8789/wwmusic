@@ -17,6 +17,7 @@ include FRONTEND . "header.php";
         <div class="col-lg-9">
           <!-- carousel -->
           <?php
+          
           if(!isset($_GET['id']))
             include FRONTEND . "carousel.php"; 
           ?>

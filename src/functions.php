@@ -72,7 +72,7 @@ function HomeList() {
                     <h5><b>{$row['price_product']} €</b></h5>
                     </div>
                     <div class="col-lg-7">
-                    <a href="toShoppingCart.php"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
+                    <a href="shopping.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
                     </div>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ function listFiltered($filter, $filterValue) {
                     <h5><b>{$row['price_product']} €</b></h5>
                     </div>
                     <div class="col-md-7">
-                    <a href="carrello.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
+                    <a href="shopping.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small">Acquista</button></a>
                     </div>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ function singleProduct() {
                 4.0 stelle
                   </div>
                   <div class="col-md-6">
-                    <a href=""><button type="button" class="btn btn-dark btn-small btn-block">Acquista</button></a>
+                    <a href="shopping.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small btn-block">Acquista</button></a>
                   </div>
                   <div class="col-md-2">
                   </div>
@@ -187,6 +187,25 @@ function singleProduct() {
           echo $singleProductCard;
         }
     }
+}
+
+//shopping.php create the notice
+function createNotice($msg) {
+
+  if(!empty($msg))
+    $_SESSION['message'] = $msg;
+  else
+    $msg = " ";
+
+}
+
+//shoppingCart.php show the notice
+function showNotice() {
+  
+  if(isset($_SESSION['message'])) {
+    echo $_SESSION['message'];
+    unset($_SESSION['message']);
+  }
 }
 
 
