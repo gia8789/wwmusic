@@ -12,7 +12,7 @@
               </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="?filter=0&id=0">CATALOGO</a>
+              <a class="nav-link" href="index.php?filter=0&id=0">CATALOGO</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">LOGIN</a>

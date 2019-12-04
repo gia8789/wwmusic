@@ -1,7 +1,7 @@
 
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Il tuo primo CMS 2017<br>Sviluppato per il corso di PHP</p>
+        <p class="m-0 text-center text-white">wwMusic © 2019<br>info: gia878989@gmail.com</p>
       </div>
       <!-- /.container -->
     </footer>
