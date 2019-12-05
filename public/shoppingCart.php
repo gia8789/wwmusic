@@ -7,7 +7,10 @@ include FRONTEND . 'header.php';
 <!-- Page Content -->
 <div class="container">
 <!-- /.row --> 
+<h1><?php 
 
+//if(isset($_GET['edit']))
+//echo $_SESSION['product_' . $_GET['edit']]; ?></h1>
 <h1 class="text-center my-5">Il tuo ordine</h1>
 <h4 class="bg-danger text-center text-white"><?php showNotice(); ?></h4>
 <div class="row">   
@@ -32,15 +35,15 @@ include FRONTEND . 'header.php';
         <tbody>
 
         <?php /* carrello(); */echo "INSERIRE CARRELLO";?>
-          <!-- <tr>
+           <tr>
                 <td>apple</td>
                 <td>$23</td>
                 <td>3</td>
                 <td>2</td>
-                <td><a class="btn btn-success" href="#" role="button">Aggiungi</a></td>
-                <td><a class="btn btn-warning" href="carrello.php?remove=1" role="button">Rimuovi</a></td>
-                <td><a class="btn btn-danger" href="carrello.php?delete=1" role="button">Cancella</a> </td>
-            </tr>  -->
+                <td><a class="btn btn-dark" href="shopping.php?add=<?php echo $_GET['edit']?>" role="button">Aggiungi</a></td>
+                <td><a class="btn btn-light" href="shopping.php?remove=<?php echo $_GET['edit']?>" role="button">Rimuovi</a></td>
+                <td><a class="btn btn-danger" href="shopping.php?delete=<?php echo $_GET['edit']?>" role="button">Cancella</a> </td>
+            </tr>  
         </tbody> 
     </table>
     
