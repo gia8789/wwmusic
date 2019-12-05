@@ -1,5 +1,6 @@
 <?php 
 session_start();
+//session_destroy();
 
 defined('FRONTEND') ? null : define('FRONTEND', __DIR__ . '/templates/front/');
 defined('BACKEND') ? null : define('BACKEND', __DIR__ . '/templates/back/');

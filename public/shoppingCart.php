@@ -3,16 +3,22 @@ require_once '../src/config.php';
 require_once '../src/functions.php';
 include FRONTEND . 'header.php';
 
-
+$productList = "";
+$totalAmount = 0;
 function shoppingCart() {
   global $pdo;
+  
   if($pdo) {
       $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand";
       $infoProduct = $pdo -> query($sql);
+      global $productList;
+      global $totalAmount;
       while($row = $infoProduct -> fetch()) {
           
           $quantity = (isset($_SESSION['product_' . $row['id_product']])) ? $_SESSION['product_' . $row['id_product']] : 0;
           $amount = (isset($_SESSION['product_' . $row['id_product']])) ? $row['price_product'] * $_SESSION['product_' . $row['id_product']] : 0;
+          $totalAmount += $amount;
+          
           $productTable = <<<PRODUCT_TABLE
 
           <tr>
@@ -24,10 +30,16 @@ function shoppingCart() {
           <td><a class="btn btn-light" href="shopping.php?remove={$row['id_product']}" role="button">Rimuovi</a></td>
           <td><a class="btn btn-danger" href="shopping.php?delete={$row['id_product']}" role="button">Cancella</a> </td>
           </tr>
-
+          
           PRODUCT_TABLE;
-          if($quantity > 0)
+          if($quantity > 0) {
+            if($productList == "")
+              $productList .= $row['name_brand'] . " " . $row['name_product'];
+            else
+            $productList .= ", " . $row['name_brand'] . " " . $row['name_product'];
             echo $productTable;
+          }
+            
       }
   }
 }
@@ -87,7 +99,7 @@ function shoppingCart() {
 
 <tr class="cart-subtotal">
 <th>Articoli:</th>
-<td><span class="amount"><?php /*echo isset ($_SESSION['quantita_art']) ?  $_SESSION['quantita_art']  : $_SESSION['quantita_art'] = '0';*/ ?> COMPLETARE</span></td>
+<td><span class="amount"><?php echo $productList; ?></span></td>
 </tr>
 <tr class="shipping">
 <th>Spedizione</th>
@@ -96,7 +108,7 @@ function shoppingCart() {
 
 <tr class="order-total">
 <th>Totale ordine</th>
-<td><strong><span class="amount">€<?php /* echo isset ($_SESSION['totale']) ?  $_SESSION['totale']  : $_SESSION['totale'] = '0'; */?> TOTALE </span></strong> </td>
+<td><strong><span class="amount"><?php echo $totalAmount ?> €</span></strong> </td>
 </tr>
 
 </tbody>
