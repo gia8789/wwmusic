@@ -2,6 +2,36 @@
 require_once '../src/config.php';
 require_once '../src/functions.php';
 include FRONTEND . 'header.php';
+
+
+function shoppingCart() {
+  global $pdo;
+  if($pdo) {
+      $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand";
+      $infoProduct = $pdo -> query($sql);
+      while($row = $infoProduct -> fetch()) {
+          
+          $quantity = (isset($_SESSION['product_' . $row['id_product']])) ? $_SESSION['product_' . $row['id_product']] : 0;
+          $amount = (isset($_SESSION['product_' . $row['id_product']])) ? $row['price_product'] * $_SESSION['product_' . $row['id_product']] : 0;
+          $productTable = <<<PRODUCT_TABLE
+
+          <tr>
+          <td>{$row['name_brand']} {$row['name_product']}</td>
+          <td>{$row['price_product']}</td>
+          <td>{$quantity}</td>
+          <td>{$amount}</td>
+          <td><a class="btn btn-dark" href="shopping.php?add={$row['id_product']}" role="button">Aggiungi</a></td>
+          <td><a class="btn btn-light" href="shopping.php?remove={$row['id_product']}" role="button">Rimuovi</a></td>
+          <td><a class="btn btn-danger" href="shopping.php?delete={$row['id_product']}" role="button">Cancella</a> </td>
+          </tr>
+
+          PRODUCT_TABLE;
+          if($quantity > 0)
+            echo $productTable;
+      }
+  }
+}
+
 ?>
  
 <!-- Page Content -->
@@ -34,16 +64,8 @@ include FRONTEND . 'header.php';
         </thead>
         <tbody>
 
-        <?php /* carrello(); */echo "INSERIRE CARRELLO";?>
-           <tr>
-                <td>apple</td>
-                <td>$23</td>
-                <td>3</td>
-                <td>2</td>
-                <td><a class="btn btn-dark" href="shopping.php?add=<?php echo $_GET['edit']?>" role="button">Aggiungi</a></td>
-                <td><a class="btn btn-light" href="shopping.php?remove=<?php echo $_GET['edit']?>" role="button">Rimuovi</a></td>
-                <td><a class="btn btn-danger" href="shopping.php?delete=<?php echo $_GET['edit']?>" role="button">Cancella</a> </td>
-            </tr>  
+        <?php shoppingCart();?>
+         
         </tbody> 
     </table>
     
