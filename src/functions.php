@@ -1,12 +1,13 @@
 <?php
 
+// widget to filter by category
 function listCategories() {
     global $pdo;
     if($pdo) {
         $sql = 'SELECT * FROM `category`'; 
         $nameCateg = $pdo -> query($sql);
         while($row = $nameCateg -> fetch()) {
-            // only if you select a category or a brand
+            // if you select a category, its button becomes grey
             $activeButton = (isset($_GET['id']) && 
                               isset($_GET['filter']) && 
                               ($_GET['filter'] == 1) &&
@@ -23,13 +24,14 @@ function listCategories() {
     } 
 }
 
-
+// widget to filter by brand
 function listBrands() {
   global $pdo;
   if($pdo) {
       $sql = 'SELECT * FROM `brand`'; 
       $nameCateg = $pdo -> query($sql);
       while($row = $nameCateg -> fetch()) {
+          // if you select a brand, its button becomes grey
           $activeButton = (isset($_GET['id']) && 
                             isset($_GET['filter']) && 
                             ($_GET['filter'] == 2) &&
@@ -47,7 +49,7 @@ function listBrands() {
   } 
 }
 
-// Unfiltered list and only 6 products are shown
+// Unfiltered list in Home Page - only 6 products are shown
 function HomeList() {
     global $pdo;
     if($pdo) {
@@ -88,7 +90,7 @@ function HomeList() {
     }
 }
 
-//All products shown by category or by brand
+//All products shown filtered by category or by brand
 function listFiltered($filter, $filterValue) {
   global $pdo;
   if($pdo) {

@@ -9,6 +9,12 @@ function shoppingCart() {
   global $pdo;
   
   if($pdo) {
+      // form input-name variables
+      $item_name=1;
+      $item_id=1;
+      $item_price=1;
+      $item_quantity=1;
+
       $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand";
       $infoProduct = $pdo -> query($sql);
       global $productList;
@@ -30,14 +36,26 @@ function shoppingCart() {
           <td><a class="btn btn-light" href="shopping.php?remove={$row['id_product']}" role="button">Rimuovi</a></td>
           <td><a class="btn btn-danger" href="shopping.php?delete={$row['id_product']}" role="button">Cancella</a> </td>
           </tr>
-          
+
+          <input type="hidden" name="item_name_{$item_name}" value="{$row['name_product']}">
+          <input type="hidden" name="item_id_{$item_id}" value="{$row['id_product']}">
+          <input type="hidden" name="item_price_{$item_price}" value="{$row['price_product']}">
+          <input type="hidden" name="item_quantity_{$item_quantity}" value="{$quantity}">
+
           PRODUCT_TABLE;
+
+          //show only product added to the shopping cart
           if($quantity > 0) {
             if($productList == "")
               $productList .= $row['name_brand'] . " " . $row['name_product'];
             else
-            $productList .= ", " . $row['name_brand'] . " " . $row['name_product'];
+              $productList .= ", " . $row['name_brand'] . " " . $row['name_product'];
             echo $productTable;
+
+            $item_name++;
+            $item_id++;
+            $item_price++;
+            $item_quantity++;
           }
             
       }
@@ -60,7 +78,7 @@ function shoppingCart() {
 
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
   <input type="hidden" name="cmd" value="_cart">
-  <input type="hidden" name="business" value="gia878989@gmail.fake"> 
+  <input type="hidden" name="business" value="sell8789@hotmail.it"> 
   <INPUT TYPE="hidden" name="charset" value="utf-8">
   <INPUT TYPE="hidden" NAME="currency_code" value="EUR">
     
@@ -81,8 +99,7 @@ function shoppingCart() {
         </tbody> 
     </table>
     
-      <input type="hidden" name="upload">
-      <input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="paga subito">
+      <input type="image" name="upload" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="paga subito">
       <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
       </form>
       

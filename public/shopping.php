@@ -6,13 +6,13 @@ if(isset($_GET['add'])) {
 
     global $pdo;
     if($pdo) {
-
+        // select only the product you've added to the shopping cart
         $sql = 'SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand
         WHERE `id_product`=' . $_GET['add'];
 
-        $quantityCheck = $pdo -> query($sql);
-        
-        while($row = $quantityCheck -> fetch()) {
+        $selectedProduct = $pdo -> query($sql);
+        // check if the available quantity is enough
+        while($row = $selectedProduct -> fetch()) {
 
             if($row['quantity_product'] > $_SESSION['product_' . $_GET['add']]) {
 
