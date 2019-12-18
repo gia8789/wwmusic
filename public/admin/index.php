@@ -1,12 +1,6 @@
 <?php require_once("../../src/config.php");  ?> 
+<?php require_once("../../src/functions.php"); ?>
  <?php include(BACKEND . "header.php"); ?>  
-
-<?php 
-/*if(!isset($_SESSION['username'])){
-
-    header('Location: ../../public');
-}*/
-?>
 
 <!-- INIZIO INDEX -->
         <div id="page-wrapper">
@@ -16,7 +10,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Pannello di amministrazione 
+                           Amministrazione
+
+                           <?php
+                           if($_SESSION['user'] == 'fakeadmin')
+                                echo " - versione demo: le modifiche non verranno salvate";
+                           ?> 
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">

@@ -48,6 +48,7 @@ if(!isset($_SESSION['user']))
                 </button>
                 <a class="navbar-brand" href="index.php">wwMusic admin</a>
                 <a class="navbar-brand" href="../index.php">Visita il sito</a>
+                <div class="navbar-brand"></div>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-nav top-nav navbar-right pull-xs-right">

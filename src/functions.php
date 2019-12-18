@@ -1,5 +1,8 @@
 <?php
 
+///////////////////////////
+////  BACKEND  ////
+
 // widget to filter by category
 function listCategories() {
     global $pdo;
@@ -211,6 +214,9 @@ function showNotice() {
 }
 
 
+///////////////////////////
+////  BACKEND  ////
+
 function login() {
   if( !isset($_POST['username']) || !isset($_POST['password'])
   || empty($_POST['username']) || empty($_POST['password']) )
@@ -246,3 +252,27 @@ function logout() {
 }
 
 
+function adminProducts(){
+  global $pdo;
+  $sql = "SELECT * FROM `product` INNER JOIN `category` ON `categ_product`=`id_categ`";
+  $infoProduct = $pdo -> query($sql);
+
+  while($row = $infoProduct -> fetch()) {
+  
+    $product = <<< PRODUCT
+    
+    <tr>
+    <td>{$row['id_product']}</td>
+    <td>{$row['name_product']}</td>
+    <td><img src="../../src/images/{$row['image_product']}" alt="" style="width:100%"></td>
+    <td>{$row['name_categ']}</td>
+    <td>€{$row['price_product']}</td>
+    <td>{$row['quantity_product']}</td>
+    <td><a class="btn btn-primary" href="index.php?upd-pdt&id={$row['id_product']}" role="button">Modifica</a>
+    <td><a class="btn btn-danger" href="../../src/templates/back/del-pdt.php?id={$row['id_product']}" role="button">Cancella</a> </td>
+    </tr>
+    
+    PRODUCT;
+    echo  $product;
+    };
+  }
