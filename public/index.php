@@ -2,6 +2,7 @@
 require_once "../src/config.php";
 include FRONTEND . "header.php";
 ?>
+
     <!-- Page Content -->
     <div class="container my-5">
 

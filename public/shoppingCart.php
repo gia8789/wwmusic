@@ -11,9 +11,9 @@ function shoppingCart() {
   if($pdo) {
       // form input-name variables
       $item_name=1;
-      $item_id=1;
-      $item_price=1;
-      $item_quantity=1;
+      $item_number=1;
+      $amount=1;
+      $quantity=1;
 
       $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand";
       $infoProduct = $pdo -> query($sql);
@@ -21,31 +21,31 @@ function shoppingCart() {
       global $totalAmount;
       while($row = $infoProduct -> fetch()) {
           
-          $quantity = (isset($_SESSION['product_' . $row['id_product']])) ? $_SESSION['product_' . $row['id_product']] : 0;
-          $amount = (isset($_SESSION['product_' . $row['id_product']])) ? $row['price_product'] * $_SESSION['product_' . $row['id_product']] : 0;
-          $totalAmount += $amount;
+          $quantityValue = (isset($_SESSION['product_' . $row['id_product']])) ? $_SESSION['product_' . $row['id_product']] : 0;
+          $amountValue = (isset($_SESSION['product_' . $row['id_product']])) ? $row['price_product'] * $_SESSION['product_' . $row['id_product']] : 0;
+          $totalAmount += $amountValue;
           
           $productTable = <<<PRODUCT_TABLE
 
           <tr>
           <td>{$row['name_brand']} {$row['name_product']}</td>
           <td>{$row['price_product']}</td>
-          <td>{$quantity}</td>
-          <td>{$amount}</td>
+          <td>{$quantityValue}</td>
+          <td>{$amountValue}</td>
           <td><a class="btn btn-dark" href="shopping.php?add={$row['id_product']}" role="button">Aggiungi</a></td>
           <td><a class="btn btn-light" href="shopping.php?remove={$row['id_product']}" role="button">Rimuovi</a></td>
           <td><a class="btn btn-danger" href="shopping.php?delete={$row['id_product']}" role="button">Cancella</a> </td>
           </tr>
 
           <input type="hidden" name="item_name_{$item_name}" value="{$row['name_product']}">
-          <input type="hidden" name="item_id_{$item_id}" value="{$row['id_product']}">
-          <input type="hidden" name="item_price_{$item_price}" value="{$row['price_product']}">
-          <input type="hidden" name="item_quantity_{$item_quantity}" value="{$quantity}">
+          <input type="hidden" name="item_number_{$item_number}" value="{$row['id_product']}">
+          <input type="hidden" name="amount_{$amount}" value="{$row['price_product']}">
+          <input type="hidden" name="quantity_{$quantity}" value="{$quantityValue}">
 
           PRODUCT_TABLE;
 
           //show only product added to the shopping cart
-          if($quantity > 0) {
+          if($quantityValue > 0) {
             if($productList == "")
               $productList .= $row['name_brand'] . " " . $row['name_product'];
             else
@@ -53,9 +53,9 @@ function shoppingCart() {
             echo $productTable;
 
             $item_name++;
-            $item_id++;
-            $item_price++;
-            $item_quantity++;
+            $item_number++;
+            $amount++;
+            $quantity++;
           }
             
       }
@@ -65,7 +65,7 @@ function shoppingCart() {
 ?>
  
 <!-- Page Content -->
-<div class="container">
+<div class="container" style="height:650px">
 <!-- /.row --> 
 <h1><?php 
 
@@ -99,8 +99,7 @@ function shoppingCart() {
         </tbody> 
     </table>
     
-      <input type="image" name="upload" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="paga subito">
-      <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+      <input type="image" name="upload" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_buynowCC_LG.gif" alt="Paypal - the safer, easier way to pay online">
       </form>
       
 

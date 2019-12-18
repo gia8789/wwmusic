@@ -211,3 +211,38 @@ function showNotice() {
 }
 
 
+function login() {
+  if( !isset($_POST['username']) || !isset($_POST['password'])
+  || empty($_POST['username']) || empty($_POST['password']) )
+          
+      header('Location: loginPage.php?fail');
+
+  // fake admin account: his operation won't be saved into the database
+  if( ($_POST['username'] != 'fakeadmin') || ($_POST['password'] != 'pass') )
+
+      header('Location: loginPage.php?fail');
+
+  else
+  {
+      session_unset();
+      session_destroy();
+      session_start();
+      $_SESSION['user'] = 'fakeadmin';
+
+      header('Location: admin/index.php');
+  }
+
+}
+
+
+function logout() {
+  if(isset($_SESSION))
+  {
+    session_unset();
+    session_destroy();
+    header('Location: index.php');
+  }
+
+}
+
+

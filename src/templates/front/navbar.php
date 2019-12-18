@@ -21,7 +21,7 @@
               <a class="nav-link" href="#">REGISTRATI</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">ACCEDI</a>
+              <a class="nav-link" href="loginPage.php">ACCEDI</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="shoppingCart.php">CARRELLO</a>
