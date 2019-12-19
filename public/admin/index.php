@@ -14,7 +14,7 @@
 
                            <?php
                            if($_SESSION['user'] == 'fakeadmin')
-                                echo " - versione demo: le modifiche non verranno salvate";
+                                echo " (versione demo): i dati non verranno modificati";
                            ?> 
                         </h1>
                         <ol class="breadcrumb">
@@ -47,6 +47,12 @@
                 if(isset($_GET['update-pdt'])){
                     include(BACKEND . "/update-pdt.php");
                 }
+
+                if(isset($_GET['delete-pdt'])){
+                    include(BACKEND . "/delete-pdt.php");
+                }
+
+
 
                 if(isset($_GET['categ-admin'])){
                     include(BACKEND . "/categ-admin.php");

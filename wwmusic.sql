@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 04, 2019 alle 18:51
+-- Creato il: Dic 19, 2019 alle 16:06
 -- Versione del server: 10.4.8-MariaDB
 -- Versione PHP: 7.3.11
 
@@ -89,7 +89,7 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id_product`, `name_product`, `categ_product`, `brand_product`, `description_product`, `price_product`, `image_product`, `quantity_product`) VALUES
 (1, 'Export Fusion', 4, 4, 'Il drum-set numero uno di vendite al mondo è tornato migliore che mai. La serie Export è un nome ogni batterista conosce. Qualsiasi batterista di successo di oggi è probabile che abbia iniziato a suonare su un kit Export. Questi kit hanno iniziato migliaia di batteristi offrendo contemporaneamente qualità e convenienza. Ora, 30 anni dopo, Export lo ripete. Grandi caratteristiche come la composizione dei fusti di ispirazione Reference, pedale grancassa P-930, supporti tom Opti-Loc, ed il sistema hardware completamente ridisegnato rendono il valore ancora più grande. La Serie Export di Pearl offre una ricetta acusticamente avanzata di strati di legni premium disposti strategicamente per massimizzare la risposta in frequenza di ogni componente. Come per tutti i tamburi Pearl, ogni fusto è formato dal processo di costruzione SST che utilizza calore estremo, giunzioni di precisione, l\'esclusiva Acoustiglue Pearl ed oltre 450kg di pressione idraulica per creare la migliore camera d\'aria acustica.', 699, 'export_fusion.png', 6),
-(2, 'Les Paul Standard', 1, 3, 'La Les Paul Standard HP conserva molte caratteristiche Gibson popolari, tra cui il profilo asimmetrico del manico Slim Taper, migliorando l\'uso con un aggiornamento dei venerati pick-up humbucker PAF ed un top in acero figurato AAA+ con abbellimenti di alto livello. Il modello HP offre innovazioni all\'avanguardia per i chitarristi che guardano oltre, tra le quali un accesso veloce alla parte bassa della tastiera, larghezza del manico da solista, capotasto zero-fret e sellette regolabili in titanio. Una varietà timbrica eccezionale fornita da 4 potenziometri push-pull con DIP switch per oltre 150 possibilità di rewiring istantanei reversibili.', 2599, 'lespaul.png', 3),
+(2, 'Les Paul Standard', 1, 3, 'La Les Paul Standard HP conserva molte caratteristiche Gibson popolari, tra cui il profilo asimmetrico del manico Slim Taper, migliorando l\'uso con un aggiornamento dei venerati pick-up humbucker PAF ed un top in acero figurato AAA+ con abbellimenti di alto livello. Il modello HP offre innovazioni all\'avanguardia per i chitarristi che guardano oltre, tra le quali un accesso veloce alla parte bassa della tastiera, larghezza del manico da solista, capotasto zero-fret e sellette regolabili in titanio. Una varietà timbrica eccezionale fornita da 4 potenziometri push-pull con DIP switch per oltre 150 possibilità di rewiring istantanei reversibili.', 2599, 'lespaul.png', 10),
 (3, 'Precision American Standard', 2, 1, 'Il Precision Bass American Standard è lo stesso strumento robusto, potente e di successo di sempre, ma ora è migliorato grazie ad un pickup splittato \'60s Precision Bass Fender Custom Shop dal suono sismico. L\'ultima incarnazione della più moderna ed indistruttibile macchina da lavoro che rivoluzionò la musica pop, ancora più forte e più indispensabile che mai.', 1699, 'precision.png', 3),
 (4, 'PSR SX700', 3, 6, 'La musica offre possibilità illimitate e la PSR-SX è attrezzata per supportare le tue avventure ai confini della creatività. Con un\'interfaccia utente completamente ridisegnata, nuove funzioni assegnabili, joystick e controller Live, puoi personalizzare le funzioni e il suono degli strumenti, ovunque ti portino i tuoi viaggi musicali. Perfetta per il songwriting, la PSR-SX è ricca di pattern ritmici (chiamati \"Style\") che abbracciano molti generi musicali, rendendola ideale per creare l\'accompagnamento delle tue idee musicali e una preziosa ispirazione per la tua prossima composizione o arrangiamento. Insieme a una straordinaria gamma di suoni espressivi e armonie vocali, la PSR-SX è la tua perfetta partner musicale. Ogni grande canzone inizia come un\'idea: una semplice melodia o un ritmo che si perfeziona con l\'accompagnamento e si organizza in un pezzo finito. Con una workstation arranger Yamaha PSR-SX700, troverai quel processo magico più fluido, più veloce e più intuitivo che mai.', 1129, 'psrsx700.png', 4),
 (5, 'AM ULTRA Stratocaster MN Texas Tea', 1, 1, 'American Ultra è la serie di chitarre e bassi Fender più avanzata per musicisti esigenti che richiedono il massimo in termini di precisione, performance e suono. L\'American Ultra Stratocaster presenta un esclusivo profilo del manico \"Modern D\" con bordi della tastiera arrotondati per ore di comfort, mantre la parte inferiore del manico affusolata consente un accesso facile al registro più alto. Una tastiera a raggio composito da 10\"-14\" con 22 tasti medium-jumbo vogliono dire assoli facili e precisi, mentre i pickup Ultra Noiseless ed il cablaggio avanzato offrono infinite possibilità timbriche - senza ronzio. Questo strumento versatile ed all\'avanguardia ti ispirerà a spingere la tua musica versi nuovi livelli. Altre caratteristiche includono meccaniche sigillate, hardware cromato e capotasto in osso. Include anche una custodia rigida premium.', 1979, 'stratocaster.png', 3),
@@ -119,8 +119,9 @@ ALTER TABLE `category`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id_product`),
-  ADD KEY `categ_product` (`categ_product`),
-  ADD KEY `brand_product` (`brand_product`);
+  ADD UNIQUE KEY `name+brand_unique` (`name_product`,`brand_product`) USING BTREE,
+  ADD KEY `categ_foreign` (`categ_product`) USING BTREE,
+  ADD KEY `brand_foreign` (`brand_product`) USING BTREE;
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
@@ -142,7 +143,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT per la tabella `product`
 --
 ALTER TABLE `product`
-  MODIFY `id_product` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_product` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Limiti per le tabelle scaricate

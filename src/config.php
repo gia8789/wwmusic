@@ -1,9 +1,9 @@
 <?php 
 session_start();
-//session_destroy();
 
 defined('FRONTEND') ? null : define('FRONTEND', __DIR__ . '/templates/front/');
 defined('BACKEND') ? null : define('BACKEND', __DIR__ . '/templates/back/');
+defined('IMG_UPLOADS') ? null : define('IMG_UPLOADS' , __DIR__ . '/images');
 
 define('DB_HOST','localhost');
 define('DB_USER','root');

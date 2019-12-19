@@ -14,15 +14,33 @@
             <li class="nav-item active">
               <a class="nav-link" href="index.php?filter=0&id=0">CATALOGO</a>
             </li>
-            <li class="nav-item active">
+            <!--<li class="nav-item active">
               <a class="nav-link" href="#">CONTATTI</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">REGISTRATI</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="loginPage.php">ACCEDI</a>
-            </li>
+            </li>-->
+            <?php
+            if(!isset($_SESSION['user']) ) {
+            ?>
+              <li class="nav-item active">
+                <a class="nav-link" href="loginPage.php">ACCEDI</a>
+              </li>
+
+            <?php 
+            } else {
+            ?>
+              <li class="nav-item active">
+                <a class="nav-link" href="logout.php">LOGOUT</a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" href="admin/index.php">AMMINISTRAZIONE</a>
+              </li>
+            
+            <?php
+            }
+            ?>
             <li class="nav-item active">
               <a class="nav-link" href="shoppingCart.php">CARRELLO</a>
             </li>

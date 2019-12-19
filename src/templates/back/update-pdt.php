@@ -1,7 +1,7 @@
 <?php
 if(isset($_GET['id'])){
 
-$query = query("SELECT * FROM prodotti WHERE id_prodotto= {$_GET['id']} ");
+$query = "SELECT * FROM prodotti WHERE id_prodotto= {$_GET['id']} ";
 
 ///////
 //aggiornaProdotto();
@@ -24,13 +24,13 @@ $query = query("SELECT * FROM prodotti WHERE id_prodotto= {$_GET['id']} ");
     </div>
     <div class="form-group">
            <label for="dettagli">Dettagli</label>
-      <textarea name="dettagli"  cols="30" rows="8" class="form-control" id="editor1"><?php// echo $dettagli; ?></textarea>
-     <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
+      <textarea name="dettagli"  cols="30" rows="8" class="form-control" id="editor1">      </textarea>
+      <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
     </div>
     
     <div class="form-group">
         <label for="info">Info</label>
-   <textarea name="desc_breve" cols="30" rows="3" class="form-control" type="text" id="editor2"><?php// echo $infoBreve; ?></textarea>
+   <textarea name="desc_breve" cols="30" rows="3" class="form-control" type="text" id="editor2">      </textarea>
   <!-- <script> CKEDITOR.replace( 'editor2' ); </script>-->
  </div>
 </div><!--fine col-8-->

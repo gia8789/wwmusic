@@ -56,7 +56,7 @@ function listBrands() {
 function HomeList() {
     global $pdo;
     if($pdo) {
-        $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand ORDER BY RAND() LIMIT 6";
+        $sql = "SELECT * FROM `product` INNER JOIN `brand` on product.brand_product=brand.id_brand ORDER BY RAND() LIMIT 3";
         $infoProduct = $pdo -> query($sql);
         while($row = $infoProduct -> fetch()) {
                  
@@ -217,13 +217,14 @@ function showNotice() {
 ///////////////////////////
 ////  BACKEND  ////
 
+/* only a fake administrator account can login at the moment!
+his operation won't be saved into the database */
 function login() {
   if( !isset($_POST['username']) || !isset($_POST['password'])
   || empty($_POST['username']) || empty($_POST['password']) )
           
       header('Location: loginPage.php?fail');
 
-  // fake admin account: his operation won't be saved into the database
   if( ($_POST['username'] != 'fakeadmin') || ($_POST['password'] != 'pass') )
 
       header('Location: loginPage.php?fail');
@@ -242,7 +243,7 @@ function login() {
 
 
 function logout() {
-  if(isset($_SESSION))
+  if(isset($_SESSION['user']))
   {
     session_unset();
     session_destroy();
@@ -254,7 +255,8 @@ function logout() {
 
 function adminProducts(){
   global $pdo;
-  $sql = "SELECT * FROM `product` INNER JOIN `category` ON `categ_product`=`id_categ`";
+  $sql = "SELECT * FROM `product` INNER JOIN `category` ON `categ_product`=`id_categ`
+  INNER JOIN `brand` ON `brand_product`=`id_brand`";
   $infoProduct = $pdo -> query($sql);
 
   while($row = $infoProduct -> fetch()) {
@@ -264,15 +266,165 @@ function adminProducts(){
     <tr>
     <td>{$row['id_product']}</td>
     <td>{$row['name_product']}</td>
+    <td>{$row['name_brand']}</td>
     <td><img src="../../src/images/{$row['image_product']}" alt="" style="width:100%"></td>
     <td>{$row['name_categ']}</td>
     <td>€{$row['price_product']}</td>
     <td>{$row['quantity_product']}</td>
-    <td><a class="btn btn-primary" href="index.php?upd-pdt&id={$row['id_product']}" role="button">Modifica</a>
-    <td><a class="btn btn-danger" href="../../src/templates/back/del-pdt.php?id={$row['id_product']}" role="button">Cancella</a> </td>
+    <td><a class="btn btn-primary" href="index.php?update-pdt&id={$row['id_product']}" role="button">Modifica</a>
+    <td><a class="btn btn-danger" href="index.php?delete-pdt&id={$row['id_product']}" role="button">Cancella</a> </td>
     </tr>
     
     PRODUCT;
     echo  $product;
-    };
   }
+}
+
+
+function showBrand(){
+  global $pdo;
+  $sql = "SELECT * FROM `brand`";
+  $infoProduct = $pdo -> query($sql);
+  
+  while($row = $infoProduct -> fetch()) {
+  
+    $brand = <<< BRAND
+    <option value="{$row['name_brand']}">{$row['name_brand']}</option>
+  BRAND;
+  echo $brand;
+  
+  }
+}
+
+function showCategory(){
+  global $pdo;
+  $sql = "SELECT * FROM `category`";
+  $infoProduct = $pdo -> query($sql);
+  
+  while($row = $infoProduct -> fetch()) {
+  
+    $category = <<< CATEGORY
+    <option value="{$row['name_categ']}">{$row['name_categ']}</option>
+  CATEGORY;
+  echo $category;
+  
+  }
+}
+
+
+function adminCategories(){
+  global $pdo;
+  $sql = "SELECT * FROM `category`";
+  $categInfo = $pdo -> query($sql);
+  
+  while($row = $categInfo -> fetch() ){
+  
+    $category = <<<CATEGORY
+    <tr>
+    
+    <td style="width:25%">{$row['id_categ']}</td>
+    <td style="width:50%">{$row['name_categ']}</td>
+    <td style="width:25%"><a class="btn btn-danger" href="" role="button">Cancella</a> </td>
+    </tr>
+    
+    CATEGORY;
+  
+    echo $category;
+  }
+}
+
+// if you give its name you get the id
+function categoryId($name) {
+  global $pdo;
+  $sql = "SELECT * FROM `category` WHERE `name_categ`='$name'";
+  $categId = $pdo -> query($sql);
+  
+  
+  while($row = $categId -> fetch() )
+      return $row['id_categ'];
+  
+}
+
+//if you give its name you get the id
+function brandId($name) {
+  global $pdo;
+  $sql = "SELECT * FROM `brand` WHERE `name_brand`='$name'";
+  $brandId = $pdo -> query($sql);
+  
+  
+  while($row = $brandId -> fetch() )
+      return $row['id_brand'];
+  
+}
+
+function addProduct(){
+  if(isset($_POST['add-pdt'])){
+  
+    global $pdo;
+    $name = $_POST['name'];
+    // we must insert category->id and brand->id in `product` table, not their names
+    $brand = brandId($_POST['brand']);
+    $category = categoryId($_POST['category']);
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $image = $_FILES['image']['name'];
+    $imageTemp = $_FILES['image']['tmp_name'];
+    $quantity = $_POST['quantity'];
+
+    move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
+  
+    $sql = "INSERT INTO `product`(name_product , brand_product , categ_product , 
+    description_product , price_product , quantity_product , image_product ) 
+    VALUES('{$name}' , '{$brand}' , '{$category}' , '{$description}' , '{$price}' , '{$quantity}' , '{$image}' )";
+    $insertProd = $pdo -> query($sql);
+       
+    if($insertProd)
+      createNotice('Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto');
+    else
+      createNotice('Inserimento fallito. ');    
+    //header('Location:index.php?prod-admin');
+  
+  }
+  
+}
+
+/*
+function updateProduct(){
+
+}*/
+
+/*
+function deleteProduct(){
+
+}*/
+
+/*
+function addBrand(){
+
+}*/
+
+/*
+function editBrand(){
+
+}*/
+
+/*
+function deleteBrand(){
+
+}*/
+
+/*
+function addCategory(){
+
+}*/
+
+/*
+function editCategory(){
+
+}*/
+
+/*
+function deleteCategory(){
+
+}*/
+        
