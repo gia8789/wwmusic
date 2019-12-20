@@ -1,14 +1,30 @@
-<?php
-if(isset($_GET['id'])){
+<?php  //updateProduct(); //--> this function will be activated only for real administrator 
+showNotice();
 
-$query = "SELECT * FROM prodotti WHERE id_prodotto= {$_GET['id']} ";
+if(isset($_GET['id']) ) {
+    global $pdo;
+    $sql = "SELECT * FROM `product` WHERE `id_product`='{$_GET['id']}'";
+    $infoProduct = $pdo -> query($sql);
 
-///////
-//aggiornaProdotto();
+    while($row = $infoProduct -> fetch() ) {
+        $actualName = $row['name_product'];
+        $actualCategory = $row['categ_product'];
+        $actualBrand = $row['brand_product'];
+        $actualDescription = $row['description_product'];
+        $actualPrice = $row['price_product'];
+        $actualImage = $row['image_product'];
+        $actualQuantity = $row['quantity_product'];
+    }
+    
+   echo brandName($row['brand_product']) . ' ' . categoryName($row['categ_product']);
+ 
 }
+else 
+    header('Location:index.php?admin-prod');
 
 
 ?>
+
 
 <div class="container">
     <div>
@@ -17,54 +33,58 @@ $query = "SELECT * FROM prodotti WHERE id_prodotto= {$_GET['id']} ";
 
 <form action="" method="post" enctype="multipart/form-data">
 <div class="row">
-<div class="col-md-8">
-<div class="form-group">
-    <label for="nome">Nome </label>
-        <input type="text" name="nome_pdt" class="form-control" value="<?php //echo $nomePdt; ?>" >  
+<div class="col-md-5">
+    <div class="form-group">
+        <label for="name">Nome </label>
+        <input type="text" name="name" class="form-control" value="<?php echo $actualName; ?>" >  
     </div>
     <div class="form-group">
-           <label for="dettagli">Dettagli</label>
-      <textarea name="dettagli"  cols="30" rows="8" class="form-control" id="editor1">      </textarea>
-      <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
+         <label for="brand">Marche</label>
+        <select name="brand"  class="form-control">
+          <option value="<?php echo $actualBrand; ?>" > <?php echo brandName($actualBrand); ?> </option> 
+          <?php showBrand(); ?>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Descrizione</label>
+        <textarea name="description"  cols="30" rows="10" class="form-control" id="editor1"><?php echo $actualDescription; ?></textarea>
+     <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
     </div>
     
+</div><!--end col-->
+
+<div class="col-md-2">
+</div><!--end col-->
+
+<div class="col-md-5">
+
     <div class="form-group">
-        <label for="info">Info</label>
-   <textarea name="desc_breve" cols="30" rows="3" class="form-control" type="text" id="editor2">      </textarea>
-  <!-- <script> CKEDITOR.replace( 'editor2' ); </script>-->
- </div>
-</div><!--fine col-8-->
-
-<div class="col-md-4">
-
-<div class="form-group">
-        <label for="prezzo">Prezzo</label>
-        <input type="number"  name="prezzo" class="form-control"  step=".01" min="0" value="<?php //echo $prezzo; ?>">
+        <label for="price">Prezzo</label>
+        <input type="number"  name="price" class="form-control" value="<?php echo $actualPrice; ?>" step=".01" min="0">
     </div>
     <div class="form-group">
-         <label for="categoria">Categorie</label>
-        <select name="categoria_pdt"  class="form-control">
-          <option value="<?php //echo $catPdt; ?>"><?php  //echo titoloCat($catPdt); ?></option> 
-          <?php //mostra_cat_prodotto(); ?>
+         <label for="category">Categorie</label>
+        <select name="category"  class="form-control">
+          <option value="<?php echo $actualCategory; ?>" > <?php echo categoryName($actualCategory); ?> </option> 
+          <?php showCategory(); ?>
         </select>
-</div>
+    </div>
 
     <div class="form-group">
-        <label for="quantita">Quantità</label>
-      <input type="number" name="quantita_pdt" class="form-control" min="0" value="<?php //echo $quantitaPdt; ?>">
-  </div>
+        <label for="quantity">Quantità</label>
+      <input type="number" name="quantity" class="form-control" value = "<?php echo $actualQuantity; ?>" min="0">
+    </div>
 
     <div class="form-group">
-        <label for="immagine">Immagine</label>
-        <input type="file" name="immagine">  
-        <img width="100" src="../../risorse/<?php //echo $immaginePdt; ?> " alt="">
+        <label for="image">Immagine</label>
+        <input type="file" name="image" value = "<?php echo $actualImage; ?>" >  
     </div>  
     
-    <div class="form-group">
-     <input type="submit" name="aggiorna" class="btn btn-success btn-lg" value="Aggiorna">
+    <div class="form-group" style="margin-top:50px">
+     <input type="submit" name="upd-pdt" class="btn btn-success" value="Aggiorna">
     </div>
 
-</div><!--fine col-4-->
+</div><!--end col-->
 </div>
 </form>
 

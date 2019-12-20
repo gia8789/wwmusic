@@ -1,4 +1,4 @@
-<?php addProduct(); 
+<?php  //addProduct(); //---> this function will be activated only for real administrator; 
 showNotice();
 ?>
 
@@ -27,6 +27,9 @@ showNotice();
      <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
     </div>
     
+</div><!--end col-->
+
+<div class="col-md-2">
 </div><!--end col-->
 
 <div class="col-md-5">

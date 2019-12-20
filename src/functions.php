@@ -271,8 +271,8 @@ function adminProducts(){
     <td>{$row['name_categ']}</td>
     <td>€{$row['price_product']}</td>
     <td>{$row['quantity_product']}</td>
-    <td><a class="btn btn-primary" href="index.php?update-pdt&id={$row['id_product']}" role="button">Modifica</a>
-    <td><a class="btn btn-danger" href="index.php?delete-pdt&id={$row['id_product']}" role="button">Cancella</a> </td>
+    <td><a class="btn btn-warning" href="index.php?update-pdt&id={$row['id_product']}" role="button">Modifica</a>
+    <td><a class="btn btn-danger" href="" role="button">Cancella</a> </td>
     </tr>
     
     PRODUCT;
@@ -281,8 +281,9 @@ function adminProducts(){
 }
 
 
-function showBrand(){
+function showBrand() {
   global $pdo;
+
   $sql = "SELECT * FROM `brand`";
   $infoProduct = $pdo -> query($sql);
   
@@ -296,8 +297,9 @@ function showBrand(){
   }
 }
 
-function showCategory(){
+function showCategory() {
   global $pdo;
+
   $sql = "SELECT * FROM `category`";
   $infoProduct = $pdo -> query($sql);
   
@@ -357,6 +359,30 @@ function brandId($name) {
   
 }
 
+// if you give its id you get the name
+function categoryName($id) {
+  global $pdo;
+  $sql = "SELECT * FROM `category` WHERE `id_categ`='$id'";
+  $categName = $pdo -> query($sql);
+    
+  while($row = $categName -> fetch() )
+      return $row['name_categ'];
+  
+}
+
+// if you give its id you get the name
+function BrandName($id) {
+  global $pdo;
+  $sql = "SELECT * FROM `brand` WHERE `id_brand`='$id'";
+  $brandName = $pdo -> query($sql);
+    
+  while($row = $brandName -> fetch() )
+      return $row['name_brand'];
+  
+}
+
+
+
 function addProduct(){
   if(isset($_POST['add-pdt'])){
   
@@ -382,16 +408,42 @@ function addProduct(){
       createNotice('Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto');
     else
       createNotice('Inserimento fallito. ');    
-    //header('Location:index.php?prod-admin');
-  
+    
   }
   
 }
 
-/*
-function updateProduct(){
 
-}*/
+function updateProduct(){
+  if(isset($_POST['upd-pdt'])){
+  
+    global $pdo;
+    $name = $_POST['name'];
+    // we must insert category->id and brand->id in `product` table, not their names
+    $brand = brandId($_POST['brand']);
+    $category = categoryId($_POST['category']);
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $image = $_FILES['image']['name'];
+    $imageTemp = $_FILES['image']['tmp_name'];
+    $quantity = $_POST['quantity'];
+
+    move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
+  
+    $sql = "UPDATE `product` SET `name_product` = '{$name}' ,  `categ_product` =  '{$category}' , `brand_product` = '{$brand}' ,
+    `description_product` =  '{$description}' , `price_product` =  '{$price}' , `image_product` = '{$image}' ,
+    `quantity_product` =  '{$quantity}' WHERE  `id_product` = {$_GET['id']}";
+
+    $updateProd = $pdo -> query($sql);
+       
+    if($updateProd)
+      createNotice('Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiornato correttamente');
+    else
+      createNotice('Aggiornamento fallito. ');    
+    
+  }
+
+}
 
 /*
 function deleteProduct(){
@@ -426,5 +478,4 @@ function editCategory(){
 /*
 function deleteCategory(){
 
-}*/
-        
+}*/        

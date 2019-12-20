@@ -10,7 +10,7 @@
            <th style="width:10%">Immagine</th>
            <th>Categoria</th>
            <th>Prezzo</th>
-           <th>Magazzino</th>
+           <th>Quantita'</th>
         
       </tr>
     </thead>
