@@ -290,7 +290,7 @@ function showBrand() {
   while($row = $infoProduct -> fetch()) {
   
     $brand = <<< BRAND
-    <option value="{$row['name_brand']}">{$row['name_brand']}</option>
+    <option value="{$row['id_brand']}">{$row['name_brand']}</option>
   BRAND;
   echo $brand;
   
@@ -306,7 +306,7 @@ function showCategory() {
   while($row = $infoProduct -> fetch()) {
   
     $category = <<< CATEGORY
-    <option value="{$row['name_categ']}">{$row['name_categ']}</option>
+    <option value="{$row['id_categ']}">{$row['name_categ']}</option>
   CATEGORY;
   echo $category;
   
@@ -371,13 +371,24 @@ function categoryName($id) {
 }
 
 // if you give its id you get the name
-function BrandName($id) {
+function brandName($id) {
   global $pdo;
   $sql = "SELECT * FROM `brand` WHERE `id_brand`='$id'";
   $brandName = $pdo -> query($sql);
     
   while($row = $brandName -> fetch() )
       return $row['name_brand'];
+  
+}
+
+// if you give its id you get the name
+function productName($id) {
+  global $pdo;
+  $sql = "SELECT * FROM `product` WHERE `id_product`='$id'";
+  $productName = $pdo -> query($sql);
+    
+  while($row = $productName -> fetch() )
+      return $row['name_product'];
   
 }
 
@@ -405,9 +416,9 @@ function addProduct(){
     $insertProd = $pdo -> query($sql);
        
     if($insertProd)
-      createNotice('Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto');
+      createNotice('<b>Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto</b>');
     else
-      createNotice('Inserimento fallito. ');    
+      createNotice('<b>Inserimento fallito. </b>');    
     
   }
   
@@ -418,28 +429,29 @@ function updateProduct(){
   if(isset($_POST['upd-pdt'])){
   
     global $pdo;
-    $name = $_POST['name'];
+    $name = ( $_POST['name'] && !empty($_POST['name']) ) ? $_POST['name'] : productName($_GET['id']);
     // we must insert category->id and brand->id in `product` table, not their names
-    $brand = brandId($_POST['brand']);
-    $category = categoryId($_POST['category']);
-    $description = $_POST['description'];
-    $price = $_POST['price'];
-    $image = $_FILES['image']['name'];
-    $imageTemp = $_FILES['image']['tmp_name'];
-    $quantity = $_POST['quantity'];
+    $brand = $_POST['brand'];
+    $category = $_POST['category'];
+    $description = ($_POST['description']) ? $_POST['description'] : null;
+    $price = ( $_POST['price'] && ($_POST['price'] >= 0) ) ? $_POST['price'] : 0;
+    $image = ($_FILES['image']['name']) ? $_FILES['image']['name'] : null;
+    $imageTemp = ($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : null;
+    $quantity = ( $_POST['quantity'] && ($_POST['quantity'] >= 0) ) ? $_POST['quantity'] : 0;
 
-    move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
+    if($image && $imageTemp)
+      move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
   
     $sql = "UPDATE `product` SET `name_product` = '{$name}' ,  `categ_product` =  '{$category}' , `brand_product` = '{$brand}' ,
     `description_product` =  '{$description}' , `price_product` =  '{$price}' , `image_product` = '{$image}' ,
     `quantity_product` =  '{$quantity}' WHERE  `id_product` = {$_GET['id']}";
 
     $updateProd = $pdo -> query($sql);
-       
+    
     if($updateProd)
-      createNotice('Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiornato correttamente');
+      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiornato correttamente</b>');
     else
-      createNotice('Aggiornamento fallito. ');    
+      createNotice("<b>Aggiornamento fallito</b>");    
     
   }
 

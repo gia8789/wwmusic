@@ -1,5 +1,5 @@
 <?php  //addProduct(); //---> this function will be activated only for real administrator; 
-showNotice();
+
 ?>
 
 <div class="container">
@@ -58,6 +58,8 @@ showNotice();
     
     <div class="form-group" style="margin-top:50px">
      <input type="submit" name="add-pdt" class="btn btn-success" value="Aggiungi">
+     <br><br>
+     <?php showNotice(); ?>
     </div>
 
 </div><!--end col-4-->

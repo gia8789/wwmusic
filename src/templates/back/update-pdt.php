@@ -1,5 +1,4 @@
-<?php  //updateProduct(); //--> this function will be activated only for real administrator 
-showNotice();
+<?php  updateProduct(); //--> this function will be activated only for real administrator 
 
 if(isset($_GET['id']) ) {
     global $pdo;
@@ -16,8 +15,6 @@ if(isset($_GET['id']) ) {
         $actualQuantity = $row['quantity_product'];
     }
     
-   echo brandName($row['brand_product']) . ' ' . categoryName($row['categ_product']);
- 
 }
 else 
     header('Location:index.php?admin-prod');
@@ -82,7 +79,10 @@ else
     
     <div class="form-group" style="margin-top:50px">
      <input type="submit" name="upd-pdt" class="btn btn-success" value="Aggiorna">
+     <br><br>
+     <?php showNotice(); ?>
     </div>
+    
 
 </div><!--end col-->
 </div>
