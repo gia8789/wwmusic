@@ -1,4 +1,4 @@
-<?php  //addProduct(); //---> this function will be activated only for real administrator; 
+<?php  //addProduct(); //---> this function will be uncommented only for real administrator; 
 
 ?>
 

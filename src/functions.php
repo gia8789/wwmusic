@@ -392,6 +392,52 @@ function productName($id) {
   
 }
 
+// if you give the product id you get the name of its image
+function imageOfProduct($id) {
+  global $pdo;
+  $sql = "SELECT * FROM `product` WHERE `id_product`='$id'";
+  $productImage = $pdo -> query($sql);
+    
+  while($row = $productImage -> fetch() )
+      return $row['image_product'];
+  
+}
+
+//upload the new image
+function uploadImg($image, $imageTemp, $previous) {
+  $failure = false;
+
+  if($image && $imageTemp){
+    if(move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image))
+      $uploadMsg = "La nuova immagine e' stata caricata.<br>";
+    else{
+      $uploadMsg = "Errore nel caricamento della nuova immagine<br>";
+      $failure = true;
+    }
+  }
+  else {
+    if($previous)
+      $uploadMsg = "";
+    else
+      $uploadMsg = "Non e' stata inserita alcuna immagine<br>";
+  }
+
+  return ['failure'=>$failure , 'msg'=> $uploadMsg];
+}
+
+// the old image gets deleted
+function deletePreviousImg($image) {
+  if($image) {
+    if(!unlink(IMG_UPLOADS . '/' . $image))
+      $imgMsg = "Errore. La vecchia immagine $image' ancora presente.<br>";
+    else
+      $imgMsg = "La vecchia immagine e' stata eliminata.<br>";
+  } 
+  else
+      $imgMsg = "Questo prodotto non aveva un'immagine.<br>";
+
+  return $imgMsg;
+}
 
 
 function addProduct(){
@@ -435,23 +481,39 @@ function updateProduct(){
     $category = $_POST['category'];
     $description = ($_POST['description']) ? $_POST['description'] : null;
     $price = ( $_POST['price'] && ($_POST['price'] >= 0) ) ? $_POST['price'] : 0;
-    $image = ($_FILES['image']['name']) ? $_FILES['image']['name'] : null;
+    // save the name of the previous image to delete it from its folder after the update
+    $previousImg = (imageOfProduct($_GET['id'])) ? imageOfProduct($_GET['id']) : null;
+    // each image has a univocal name because of adding time() to its name
+    $image = ($_FILES['image']['name']) ? time() . $_FILES['image']['name'] : $previousImg;
     $imageTemp = ($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : null;
     $quantity = ( $_POST['quantity'] && ($_POST['quantity'] >= 0) ) ? $_POST['quantity'] : 0;
 
-    if($image && $imageTemp)
-      move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
-  
-    $sql = "UPDATE `product` SET `name_product` = '{$name}' ,  `categ_product` =  '{$category}' , `brand_product` = '{$brand}' ,
-    `description_product` =  '{$description}' , `price_product` =  '{$price}' , `image_product` = '{$image}' ,
-    `quantity_product` =  '{$quantity}' WHERE  `id_product` = {$_GET['id']}";
+    //$upload contains a boolean and a message about the information of the upload
+    // the function will be executed even we don't insert an image
+    $upload = uploadImg($image, $imageTemp, $previousImg);
 
-    $updateProd = $pdo -> query($sql);
-    
-    if($updateProd)
-      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiornato correttamente</b>');
+    // if the new image is submitted but its upload fails, query won't be executed
+    if(!$upload['failure']) {
+      $sql = "UPDATE `product` SET `name_product` = '{$name}' ,  `categ_product` =  '{$category}' , `brand_product` = '{$brand}' ,
+      `description_product` =  '{$description}' , `price_product` =  '{$price}' , `image_product` = '{$image}' ,
+      `quantity_product` =  '{$quantity}' WHERE  `id_product` = {$_GET['id']}";
+
+      $updateProd = $pdo -> query($sql);
+    }
+       
+    if($updateProd){
+      //if you don't insert a new image, the old remains, if it exists
+      if($image == $previousImg)
+        $delImg = "";
+      else
+        // $imgMsg notice the failure of deletePreviousImg
+        $delImg = deletePreviousImg($previousImg);
+      
+      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiornato correttamente.<br>' 
+      . $delImg . $upload['msg'] . '</b>');
+    }
     else
-      createNotice("<b>Aggiornamento fallito</b>");    
+      createNotice("<b>Aggiornamento fallito<br>" . $upload['msg'] . "</b>");    
     
   }
 
