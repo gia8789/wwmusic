@@ -1,4 +1,4 @@
-<?php // updateProduct(); //--> this function will be uncommented only for real administrator 
+<?php  updateProduct(); //--> this function will be uncommented only for real administrator 
 
 if(isset($_GET['id']) ) {
     global $pdo;

@@ -404,12 +404,12 @@ function imageOfProduct($id) {
 }
 
 //upload the new image
-function uploadImg($image, $imageTemp, $previous) {
+function uploadImg( $image, $imageTemp, $previous=false ) {
   $failure = false;
 
   if($image && $imageTemp){
     if(move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image))
-      $uploadMsg = "La nuova immagine e' stata caricata.<br>";
+      $uploadMsg = "L'immagine e' stata caricata.<br>";
     else{
       $uploadMsg = "Errore nel caricamento della nuova immagine<br>";
       $failure = true;
@@ -446,25 +446,32 @@ function addProduct(){
     global $pdo;
     $name = $_POST['name'];
     // we must insert category->id and brand->id in `product` table, not their names
-    $brand = brandId($_POST['brand']);
-    $category = categoryId($_POST['category']);
-    $description = $_POST['description'];
-    $price = $_POST['price'];
-    $image = $_FILES['image']['name'];
-    $imageTemp = $_FILES['image']['tmp_name'];
-    $quantity = $_POST['quantity'];
+    $brand = $_POST['brand'];
+    $category = $_POST['category'];
+    $description = ($_POST['description']) ? $_POST['description'] : null;
+    $price = ( $_POST['price'] && ($_POST['price'] >= 0) ) ? $_POST['price'] : 0;
+    // each image has a univocal name because of adding time() to its name
+    $image = ($_FILES['image']['name']) ? time() . $_FILES['image']['name'] : null;
+    $imageTemp = ($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : null;
+    $quantity = ( $_POST['quantity'] && ($_POST['quantity'] >= 0) ) ? $_POST['quantity'] : 0;
 
-    move_uploaded_file($imageTemp , IMG_UPLOADS . '/' . $image);
-  
-    $sql = "INSERT INTO `product`(name_product , brand_product , categ_product , 
-    description_product , price_product , quantity_product , image_product ) 
-    VALUES('{$name}' , '{$brand}' , '{$category}' , '{$description}' , '{$price}' , '{$quantity}' , '{$image}' )";
-    $insertProd = $pdo -> query($sql);
-       
-    if($insertProd)
-      createNotice('<b>Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto</b>');
+    //$upload contains a boolean and a message about the information of the upload
+    // the function will be executed even we don't insert an image
+    $upload = uploadImg($image, $imageTemp);
+
+    // if the image file is submitted but its upload fails, query won't be executed because we don't want to save the name of an image that doesn't exist
+    if(!$upload['failure']) {
+      $sql = "INSERT INTO `product`(name_product , brand_product , categ_product , 
+      description_product , price_product , quantity_product , image_product ) 
+      VALUES('{$name}' , '{$brand}' , '{$category}' , '{$description}' , '{$price}' , '{$quantity}' , '{$image}' )";
+      
+      $insertProd = $pdo -> query($sql);
+    }
+        
+    if($insertProd)      
+      createNotice('<b>Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto.<br>' . $upload['msg'] . '</b>');
     else
-      createNotice('<b>Inserimento fallito. </b>');    
+      createNotice('<b>Inserimento fallito.<br>' . /* $upload['msg'] . */ '</b>');    
     
   }
   
@@ -509,11 +516,11 @@ function updateProduct(){
         // $imgMsg notice the failure of deletePreviousImg
         $delImg = deletePreviousImg($previousImg);
       
-      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiornato correttamente.<br>' 
+      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiornato.<br>' 
       . $delImg . $upload['msg'] . '</b>');
     }
     else
-      createNotice("<b>Aggiornamento fallito<br>" . $upload['msg'] . "</b>");    
+      createNotice("<b>Aggiornamento fallito.<br>" . /* $upload['msg'] . */ "</b>");    
     
   }
 
