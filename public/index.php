@@ -3,10 +3,10 @@ require_once "../src/config.php";
 include FRONTEND . "header.php";
 ?>
 
-    <!-- Page Content -->
-    <div class="container my-5">
+    <!-- Page Content --> 
+    <div class="container my-5" >
 
-      <div class="row">
+      <div class="row" >
         
         <div class="col-lg-3">
           <!-- Sidebar -->

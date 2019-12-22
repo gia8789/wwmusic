@@ -65,7 +65,7 @@ function shoppingCart() {
 ?>
  
 <!-- Page Content -->
-<div class="container" style="height:650px">
+<div class="container" style="height:700px">
 <!-- /.row --> 
 <h1><?php 
 
@@ -108,7 +108,7 @@ function shoppingCart() {
 </div>
 
 <div class="row mt-5">
-<div class="col-5 ">
+<div class="col-5">
 <h2>Riepilogo ordine</h2>
 
 <table class="table table-bordered" cellspacing="0">

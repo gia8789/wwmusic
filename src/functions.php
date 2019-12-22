@@ -173,8 +173,7 @@ function singleProduct() {
                 <div class="row">
                   <div class="col-md-4">
                     <h4><b>{$row['price_product']} €</b></h4>
-                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                4.0 stelle
+                    <span >&#9734; &#9734; &#9734; &#9734; &#9734;</span>
                   </div>
                   <div class="col-md-6">
                     <a href="shopping.php?add={$row['id_product']}"><button type="button" class="btn btn-dark btn-small btn-block">Acquista</button></a>
@@ -259,10 +258,40 @@ function adminProducts(){
   INNER JOIN `brand` ON `brand_product`=`id_brand`";
   $infoProduct = $pdo -> query($sql);
 
-  while($row = $infoProduct -> fetch()) {
+   while($row = $infoProduct -> fetch()) {
   
+    $idDel = $row['id_product'];
+
+    echo"<div class='modal fade' id=\"confirm{$row['id_product']}\" tabindex='-1' role='dialog' 
+         aria-labelledby='exampleModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+              <div class='modal-content'>
+                <div class='modal-header' >
+                    <h4 class='modal-title' style='text-align: center;' id='exampleModalLabel'>Elimina prodotto</h4>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>
+                  <div class='modal-body'>
+                    <form action='#' method='POST'>
+                    Sei sicuro di voler eliminare questo prodotto? 
+                  <center><input type='text' class='form-control' style='text-align: center' name='idDel' 
+                  value=\"{$row['brand_product']}-{$row['name_product']}\" size='1' readonly>
+                  </center>  
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-dark' data-dismiss='modal'>Annulla</button>
+                    <button type='submit' class='btn btn-danger'>Conferma</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>";
+
     $product = <<< PRODUCT
     
+    
+
     <tr>
     <td>{$row['id_product']}</td>
     <td>{$row['name_product']}</td>
@@ -272,7 +301,7 @@ function adminProducts(){
     <td>€{$row['price_product']}</td>
     <td>{$row['quantity_product']}</td>
     <td><a class="btn btn-warning" href="index.php?update-pdt&id={$row['id_product']}" role="button">Modifica</a>
-    <td><a class="btn btn-danger" href="" role="button">Cancella</a> </td>
+    <td><button type='button' class='btn btn-danger' data-toggle='modal' data-target="#confirm{$row['id_product']}">Elimina</button> </td>
     </tr>
     
     PRODUCT;
@@ -437,6 +466,35 @@ function deletePreviousImg($image) {
       $imgMsg = "Questo prodotto non aveva un'immagine.<br>";
 
   return $imgMsg;
+}
+
+// modal dialog
+function confirmDialog(/*$operation*/) {
+  echo"<div class='modal fade' id='confirm' tabindex='-1' role='dialog' 
+            aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                    <div class='modal-dialog' role='document'>
+                      <div class='modal-content'>
+                        <div class='modal-header' style='background-color:#2a4b7c'>
+                          <h4 class='modal-title' style='padding-left:140px; color:#ffffff;' id='exampleModalLabel'>Elimina prodotto</h4>
+                          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                          </button>
+                        </div>
+                        <div class='modal-body'>
+                         <form action='#' method='POST'>
+                         Sei sicuro di voler eliminare questo prodotto? 
+                        <center><input type='text' class='form-control' style='max-width:50px' name='idDel' 
+                        value='' size='1' readonly>
+                        </center>  
+                        </div>
+                        <div class='modal-footer'>
+                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Annulla</button>
+                          <button type='submit' class='btn btn-primary'>Si</button>
+                         </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>";
 }
 
 

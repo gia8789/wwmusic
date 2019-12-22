@@ -13,7 +13,7 @@
                         <a href="index.php?orders"><i class="material-icons">add_shopping_cart</i> Ordini</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="index.php?reports"><i class="material-icons">supervisor_account</i>Rapporti</a>
+                        <a href="index.php?reports"><i class="material-icons">supervisor_account</i>Recensioni</a>
                     </li>
                 </ul>
             </div>

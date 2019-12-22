@@ -7,13 +7,13 @@
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="../src/images/carousel1.jpeg" alt="First slide">
+                <img class="d-block img-fluid" src="../src/images/carousel/carousel1.jpeg" alt="First slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="../src/images/carousel2.jpeg"  alt="Second slide">
+                <img class="d-block img-fluid" src="../src/images/carousel/carousel2.jpeg"  alt="Second slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="../src/images/carousel3.jpeg" alt="Third slide">
+                <img class="d-block img-fluid" src="../src/images/carousel/carousel3.jpeg" alt="Third slide">
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
