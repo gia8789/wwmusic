@@ -44,8 +44,8 @@ else
     </div>
     <div class="form-group">
         <label for="description">Descrizione</label>
-        <textarea name="description"  cols="30" rows="10" class="form-control" id="editor1"><?php echo $actualDescription; ?></textarea>
-     <!-- <script> CKEDITOR.replace( 'editor1' ); </script> -->
+            <textarea name="description"  cols="30" rows="10" maxlength="10000" class="form-control" id="editor1"><?php echo $actualDescription; ?></textarea>
+            <script> CKEDITOR.replace( 'editor1' ); </script> 
     </div>
     
 </div><!--end col-->

@@ -458,7 +458,7 @@ function uploadImg( $image, $imageTemp, $previous=false ) {
 function deletePreviousImg($image) {
   if($image) {
     if(!unlink(IMG_UPLOADS . '/' . $image))
-      $imgMsg = "Errore. La vecchia immagine $image' ancora presente.<br>";
+      $imgMsg = "La vecchia immagine $image non e' stata eliminata.<br>";
     else
       $imgMsg = "La vecchia immagine e' stata eliminata.<br>";
   } 
@@ -506,7 +506,7 @@ function addProduct(){
     // we must insert category->id and brand->id in `product` table, not their names
     $brand = $_POST['brand'];
     $category = $_POST['category'];
-    $description = ($_POST['description']) ? $_POST['description'] : null;
+    $description = ($_POST['description']) ? $_POST['description'] : "a";
     $price = ( $_POST['price'] && ($_POST['price'] >= 0) ) ? $_POST['price'] : 0;
     // each image has a univocal name because of adding time() to its name
     $image = ($_FILES['image']['name']) ? time() . $_FILES['image']['name'] : null;
@@ -527,7 +527,7 @@ function addProduct(){
     }
         
     if($insertProd)      
-      createNotice('<b>Il prodotto ' . $_POST['brand'] . ' ' . $name . ' e\' stato aggiunto.<br>' . $upload['msg'] . '</b>');
+      createNotice('<b>Il prodotto ' . brandName($_POST['brand']) . ' ' . $name . ' e\' stato aggiunto.<br>' . $upload['msg'] . '</b>');
     else
       createNotice('<b>Inserimento fallito.<br>' . /* $upload['msg'] . */ '</b>');    
     
@@ -578,7 +578,7 @@ function updateProduct(){
       . $delImg . $upload['msg'] . '</b>');
     }
     else
-      createNotice("<b>Aggiornamento fallito.<br>" . /* $upload['msg'] . */ "</b>");    
+      createNotice("<b>Aggiornamento fallito.<br>" .  $upload['msg'] .  "</b>");    
     
   }
 

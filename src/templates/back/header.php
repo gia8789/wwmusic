@@ -26,7 +26,7 @@ if(!isset($_SESSION['user']))
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet">
 
-    <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
