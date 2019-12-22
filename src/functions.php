@@ -261,6 +261,7 @@ function adminProducts(){
    while($row = $infoProduct -> fetch()) {
   
     $idDel = $row['id_product'];
+    $brandName = brandName($row['brand_product']);
 
     echo"<div class='modal fade' id=\"confirm{$row['id_product']}\" tabindex='-1' role='dialog' 
          aria-labelledby='exampleModalLabel' aria-hidden='true'>
@@ -276,12 +277,12 @@ function adminProducts(){
                     <form action='#' method='POST'>
                     Sei sicuro di voler eliminare questo prodotto? 
                   <center><input type='text' class='form-control' style='text-align: center' name='idDel' 
-                  value=\"{$row['brand_product']}-{$row['name_product']}\" size='1' readonly>
+                  value=\"{$brandName}-{$row['name_product']}\" size='1' readonly>
                   </center>  
                   </div>
                   <div class='modal-footer'>
                     <button type='button' class='btn btn-dark' data-dismiss='modal'>Annulla</button>
-                    <button type='submit' class='btn btn-danger'>Conferma</button>
+                    <a class=\"btn btn-danger\" href=\"index.php?delete-pdt&id={$row['id_product']}\" role=\"button\">Cancella</a>
                     </form>
                   </div>
                 </div>
@@ -584,10 +585,26 @@ function updateProduct(){
 
 }
 
-/*
-function deleteProduct(){
 
-}*/
+function deleteProduct(){
+  if(isset($_GET['id'])){
+  
+    global $pdo;
+    
+      $sql = "DELETE FROM `product` WHERE `id_product` = {$_GET['id']}";
+
+      $delProd = $pdo -> query($sql);
+    
+       
+    if($delProd){
+      createNotice('<b>Il prodotto e\' stato eliminato.</b>');
+    }
+    else
+      createNotice("<b>Errore. Il prodotto non e' stato eliminato.</b>");    
+    
+  }
+
+}
 
 /*
 function addBrand(){

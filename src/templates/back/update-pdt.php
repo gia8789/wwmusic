@@ -1,4 +1,4 @@
-<?php  updateProduct(); //--> this function will be uncommented only for real administrator 
+<?php  updateProduct(); // this function is actually disabled in active website 
 
 if(isset($_GET['id']) ) {
     global $pdo;
